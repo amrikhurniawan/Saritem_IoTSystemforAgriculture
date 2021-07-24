@@ -1,0 +1,75 @@
+//Soil Moisture Sensor to Firebase Realtime Database
+//Parameter Kelembapan Tanah
+
+#include <ESP8266WiFi.h>
+#include <FirebaseArduino.h>
+#define FIREBASE_HOST "saritem-1676a.firebaseio.com" 
+#define FIREBASE_AUTH "OapBaCuTexwTUEjbk7F4lwH9AbjHThF5ziqkLbLx"
+#define WIFI_SSID "D-TPLINK"
+#define WIFI_PASSWORD "r4r4061215"
+#define Tanah A0
+#define RainPin D3
+const int digital_input = D2;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(digital_input, INPUT);                       
+  delay(2000);                                  
+
+  //--Setting Firebase--
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("connecting");
+  while (WiFi.status() != WL_CONNECTED) 
+    {
+    Serial.print(".");
+    delay(500);
+    }
+  Serial.println();
+  Serial.print("connected: ");
+  Serial.println(WiFi.localIP());
+  
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH); 
+  //rtc.begin(DateTime(__DATE__, __TIME__));
+  Serial.println("System Ready");                   
+  //SELESAI - Setting Firebase--
+
+  //--Status Perangkat--
+  Serial.println("Mulai");
+  Firebase.set("perangkat1/engine", 1);
+  //--SELESAI - Status Perangkat--
+}
+
+void loop(){
+  int p = analogRead(A0);
+  int q = p * 0.1;
+  int r = q - 60;
+  int s = q + 40;
+  
+  if (p>700){
+    Serial.println("Tanah Kering");
+    Firebase.set("perangkat1/kelembapantanah",r); 
+    JsonObject& tanahObject = jsonBuffer.createObject();
+    JsonObject& tempTime = tanahObject.createNestedObject("timestamp");
+    tanahObject["nilai"] = r; 
+    tempTime[".sv"] = "timestamp";
+    Firebase.push("perangkat1/historykelembapantanah/" + id_dht, tanahObject);
+  }
+  else if( p < 700 && p > 350){
+    Serial.println("Kelembapan Normal");
+    Firebase.set("perangkat1/kelembapantanah", q);
+    JsonObject& tanahObject = jsonBuffer.createObject();
+    JsonObject& tempTime = tanahObject.createNestedObject("timestamp");
+    tanahObject["nilai"] = q; 
+    tempTime[".sv"] = "timestamp";
+    Firebase.push("perangkat1/historykelembapantanah/" + id_dht, tanahObject);
+  }
+  else{
+    Serial.println("Tanah Basah");
+    Firebase.set("perangkat1/kelembapantanah", s);
+    JsonObject& tanahObject = jsonBuffer.createObject();
+    JsonObject& tempTime = tanahObject.createNestedObject("timestamp");
+    tanahObject["nilai"] = s; 
+    tempTime[".sv"] = "timestamp";
+    Firebase.push("perangkat1/historykelembapantanah/" + id_dht, tanahObject);
+  }  
+}
