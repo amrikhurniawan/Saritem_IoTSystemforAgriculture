@@ -3,10 +3,10 @@
 
 #include <ESP8266WiFi.h>
 #include <FirebaseArduino.h>
-#define FIREBASE_HOST "saritem-1676a.firebaseio.com" 
-#define FIREBASE_AUTH "OapBaCuTexwTUEjbk7F4lwH9AbjHThF5ziqkLbLx"
-#define WIFI_SSID "D-TPLINK"
-#define WIFI_PASSWORD "r4r4061215"
+#define FIREBASE_HOST "xx.firebaseio.com" 
+#define FIREBASE_AUTH "xxxxxx"
+#define WIFI_SSID "xxxxx"
+#define WIFI_PASSWORD "xxxxx"
 #define Tanah A0
 #define RainPin D3
 const int digital_input = D2;
