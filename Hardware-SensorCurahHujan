@@ -1,0 +1,144 @@
+//Mendeteksi Hujan dan Mengukur Curah Hujan
+//NodeMCU ESP8266
+
+#include "RTClib.h"
+#include <Wire.h>
+#include <DHT.h>
+#include <ESP8266WiFi.h>
+#include <UniversalTelegramBot.h>
+#include <WiFiClientSecure.h>
+#include <FirebaseArduino.h>
+#define FIREBASE_HOST "saritem-1676a.firebaseio.com" 
+#define FIREBASE_AUTH "OapBaCuTexwTUEjbk7F4lwH9AbjHThF5ziqkLbLx"
+#define WIFI_SSID "D-TPLINK"
+#define WIFI_PASSWORD "r4r4061215"
+#define BOTtoken "968207845:AAHZt_7vULHvB6RxFWzig4fCP4us17EoiNQ"
+#define idChat "431192618"
+#define RainPin D3
+#define DHTPIN D1                                                          
+#define DHTTYPE DHT11 
+WiFiClientSecure client;
+UniversalTelegramBot bot(BOTtoken, client);                                                      
+DHT dht(DHTPIN, DHTTYPE);
+RTC_Millis rtc;
+int sensorPin = A0;    // Raindrop
+int sensorValue2 = 0;  // VariableRaindrop
+bool bucketPositionA = false;                          
+const double bucketAmount = 1.46;        
+const double bucketRain = 2.8;   
+float latitude = -7.263829;
+float longitude = 112.745424;
+DynamicJsonBuffer jsonBuffer;
+DynamicJsonBuffer jsonBuffer2;
+String id_menit;
+String id_dht;
+boolean firstboot = true;
+boolean firstboot2 = true;
+//--Akumulasi Curah Hujan--
+double dailyRain = 0.0;                  
+double dailyRain2 = 0.0;
+double dailySuhu = 0.0;                    
+bool first;                               
+unsigned long oldTime;
+unsigned long oldTime2;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(RainPin, INPUT);                       
+  delay(2000);                                  
+
+  //--Setting Firebase--
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("connecting");
+  while (WiFi.status() != WL_CONNECTED) 
+    {
+    Serial.print(".");
+    delay(500);
+    }
+  Serial.println();
+  Serial.print("connected: ");
+  Serial.println(WiFi.localIP());
+  
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH); 
+  dht.begin();
+  //rtc.begin(DateTime(__DATE__, __TIME__));
+  Serial.println("System Ready");                   
+  //SELESAI - Setting Firebase--
+
+  //--Setting GPS
+  Firebase.set("maps/lokasi/alat1/latitude", latitude);
+  Firebase.set("maps/lokasi/alat1/longitude", longitude);
+  //--Finished - Setting GPS
+
+  //--Status Perangkat--
+  Serial.println("Mulai");
+  Firebase.set("perangkat1/engine", 1);
+  //--SELESAI - Status Perangkat--
+}
+
+
+void loop() {
+//--------------------------Rain Drop Sensor-------------------------
+sensorValue2 = analogRead(sensorPin);
+sensorValue2 = constrain(sensorValue2, 150, 440); 
+sensorValue2 = map(sensorValue2, 150, 440, 1023, 0);
+
+if (sensorValue2>= 1)
+{ 
+if(firstboot == true){  
+  int i = Firebase.getFloat("perangkat1/id_menit"); 
+  id_menit = String(i);
+  firstboot = false;
+}
+   if ((bucketPositionA==false)&&(digitalRead(RainPin)==LOW)){
+    bucketPositionA=true;
+    dailyRain+=bucketAmount;                               // update the daily rain
+    dailyRain2+=bucketAmount;                               // update the daily rain
+    Serial.print(dailyRain2);
+    Serial.println();
+  }
+  if ((bucketPositionA==true)&&(digitalRead(RainPin)==HIGH)){
+    bucketPositionA=false;  
+  }
+  if (millis() - oldTime > 60000) // baca sinyal pulse setiap 10 milli second
+  {   
+      Serial.print(dailyRain,3);Serial.print(" mm");
+      Serial.println();
+      Serial.print(dailyRain2,3);Serial.print(" mm");
+      Serial.println();
+      JsonObject& hujanObject = jsonBuffer.createObject();
+      JsonObject& tempTime = hujanObject.createNestedObject("timestamp");
+      hujanObject["nilai"] = dailyRain2;
+      tempTime[".sv"] = "timestamp";
+      Firebase.push("perangkat1/hujan/" + id_menit + "/hujanpermenit/", hujanObject);
+      Firebase.set("perangkat1/hujan/" + id_menit + "/total/", dailyRain);
+      dailyRain2 = 0.0;
+      oldTime = millis();
+  }  
+}
+
+else  
+{
+  Firebase.set("maps/lokasi/alat1/status", 0);
+  dailyRain = 0.0;
+  int a;
+  int b = Firebase.getFloat("perangkat1/id_menit");
+  int id_menit2;  
+  id_menit2 = (b + 1);
+  //Serial.print(id_menit2);
+  Serial.println();
+  Firebase.set("perangkat1/id_menit", id_menit2);
+  int statusHujan = Firebase.getInt("maps/lokasi/alat1/status");
+  while(statusHujan == 0) {
+    sensorValue2 = analogRead(sensorPin);
+    sensorValue2 = constrain(sensorValue2, 150, 440); 
+    sensorValue2 = map(sensorValue2, 150, 440, 1023, 0);
+    if(sensorValue2 >=1){
+      Firebase.set("maps/lokasi/alat1/status", 1);
+    }
+    statusHujan = Firebase.getInt("maps/lokasi/alat1/status");
+    firstboot = true;
+  }
+}
+delay(100);
+}
