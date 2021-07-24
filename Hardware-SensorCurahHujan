@@ -8,12 +8,12 @@
 #include <UniversalTelegramBot.h>
 #include <WiFiClientSecure.h>
 #include <FirebaseArduino.h>
-#define FIREBASE_HOST "saritem-1676a.firebaseio.com" 
-#define FIREBASE_AUTH "OapBaCuTexwTUEjbk7F4lwH9AbjHThF5ziqkLbLx"
-#define WIFI_SSID "D-TPLINK"
-#define WIFI_PASSWORD "r4r4061215"
-#define BOTtoken "968207845:AAHZt_7vULHvB6RxFWzig4fCP4us17EoiNQ"
-#define idChat "431192618"
+#define FIREBASE_HOST "xxx.firebaseio.com" 
+#define FIREBASE_AUTH "xxxxx"
+#define WIFI_SSID "Your Username Wi-Fi"
+#define WIFI_PASSWORD "Your Password Wi-Fi"
+#define BOTtoken "Your Token Telegram"
+#define idChat "Your ID Chat Telegram"
 #define RainPin D3
 #define DHTPIN D1                                                          
 #define DHTTYPE DHT11 
