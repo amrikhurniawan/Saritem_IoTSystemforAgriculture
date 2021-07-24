@@ -1,11 +1,68 @@
-# Saritem_IoTSystemforAgriculture
-Saritem merupakan sistem IoT yang digunakan untuk pertanian Jagung menggunakan algoritma bangun ruang 3 dimensi. Saritem terdiri dari 2 blok yaitu hardware dan software yang terintegrasi dengan Firebase Realtime Database, untuk hardware menggunakan sensor curah hujan, soil moisture dan GPS uBlox Neo 6M untuk mengukur parameter curah hujan, kelembapan tanah, gps. Hasil pemantauan akan ditampilkan dalam media informasi berbasis website 
+# [Start Bootstrap - Creative](https://startbootstrap.com/template-overviews/creative/)
 
-![Blok Diagram](https://user-images.githubusercontent.com/22910332/126869138-a025f695-b747-4128-ac9a-2b845d3e22f3.png)
-![Skematik](https://user-images.githubusercontent.com/22910332/126869148-1ee8f9e6-8e28-4435-a4c3-14f77e6c8e56.png)
-![home](https://user-images.githubusercontent.com/22910332/126868936-f8300fbf-0afd-41f0-93c5-fc5abec81c1c.JPG)
-![home1](https://user-images.githubusercontent.com/22910332/126868941-25d8739b-d769-46dc-b81c-94a78aef451f.JPG)
-![afterlogin](https://user-images.githubusercontent.com/22910332/126868952-51c3ea5d-1155-4bb7-8a98-1ac963629382.JPG)
-![riwayat](https://user-images.githubusercontent.com/22910332/126868948-9653f3b3-9be9-4ffc-a7b8-f250379b13f8.JPG)
-![login](https://user-images.githubusercontent.com/22910332/126868944-2467485d-af4b-455a-96b8-779ead27668c.JPG)
-![regis](https://user-images.githubusercontent.com/22910332/126868946-bdfdefb3-a867-4ea5-b8f0-81ca0f811f8c.JPG)
+[Creative](http://startbootstrap.com/template-overviews/creative/) is a one page creative theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+
+## Preview
+
+[![Creative Preview](https://startbootstrap.com/assets/img/screenshots/themes/creative.png)](https://blackrockdigital.github.io/startbootstrap-creative/)
+
+**[View Live Preview](https://blackrockdigital.github.io/startbootstrap-creative/)**
+
+## Status
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackrockDigital/startbootstrap-creative/master/LICENSE)
+[![npm version](https://img.shields.io/npm/v/startbootstrap-creative.svg)](https://www.npmjs.com/package/startbootstrap-creative)
+[![Build Status](https://travis-ci.org/BlackrockDigital/startbootstrap-creative.svg?branch=master)](https://travis-ci.org/BlackrockDigital/startbootstrap-creative)
+[![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-creative/status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-creative)
+[![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-creative/dev-status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-creative?type=dev)
+
+## Download and Installation
+
+To begin using this template, choose one of the following options to get started:
+* [Download the latest release on Start Bootstrap](https://startbootstrap.com/template-overviews/creative/)
+* Install via npm: `npm i startbootstrap-creative`
+* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-creative.git`
+* [Fork, Clone, or Download on GitHub](https://github.com/BlackrockDigital/startbootstrap-creative)
+
+## Usage
+
+### Basic Usage
+
+After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
+
+### Advanced Usage
+
+After installation, run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+
+#### Gulp Tasks
+
+- `gulp` the default task that builds everything
+- `gulp watch` browserSync opens the project in your default browser and live reloads when changes are made
+- `gulp css` compiles SCSS files into CSS and minifies the compiled CSS
+- `gulp js` minifies the themes JS file
+- `gulp vendor` copies dependencies from node_modules to the vendor directory
+
+You must have npm installed globally in order to use this build environment.
+
+## Bugs and Issues
+
+Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-creative/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/creative/).
+
+## About
+
+Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
+
+* https://startbootstrap.com
+* https://twitter.com/SBootstrap
+
+Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
+
+* http://davidmiller.io
+* https://twitter.com/davidmillerskt
+* https://github.com/davidtmiller
+
+Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+
+## Copyright and License
+
+Copyright 2013-2019 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-creative/blob/gh-pages/LICENSE) license.
